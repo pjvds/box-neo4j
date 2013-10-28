@@ -1,5 +1,5 @@
 name: neo4j
-version: 0.0.9
+version: 0.0.10
 inherits: mies/java7-oracle@0.0.1
 type: service
 platform: ubuntu@12.04
@@ -20,11 +20,19 @@ script: |
   sudo apt-get install lsof
   export NEO4J_VERSION=2.0.0-M06
   echo "neo4j version: $NEO4J_VERSION"
+  echo "NEO4J_VERSION=2.0.0-M06" | sudo tee -a /etc/environment
+  
   export DIR="neo4j-community-$NEO4J_VERSION"
+  echo "DIR=\"neo4j-community-$NEO4J_VERSION\"" | sudo tee -a /etc/environment
+
   export FILE="$DIR-unix.tar.gz"
+  echo "FILE=\"$DIR-unix.tar.gz\"" | sudo tee -a /etc/environment
+  
   wget http://dist.neo4j.org/$FILE
-  tar xvfz $FILE &> /dev/null
+  tar xfz $FILE
+  
   rm $FILE
   echo "org.neo4j.server.webserver.address=0.0.0.0" >> $DIR/conf/neo4j-server.properties
+
   sudo $DIR/bin/neo4j -h install
   sudo service neo4j-service start
