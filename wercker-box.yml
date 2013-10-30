@@ -1,5 +1,5 @@
 name: neo4j
-version: 0.0.10
+version: 0.0.11
 inherits: mies/java7-oracle@0.0.1
 type: service
 platform: ubuntu@12.04
