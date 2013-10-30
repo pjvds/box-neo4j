@@ -22,14 +22,15 @@ script: |
   echo "neo4j version: $NEO4J_VERSION"
   echo "NEO4J_VERSION=2.0.0-M06" | sudo tee -a /etc/environment
   
-  export DIR="neo4j-community-$NEO4J_VERSION"
-  echo "DIR=\"neo4j-community-$NEO4J_VERSION\"" | sudo tee -a /etc/environment
+  export DIR="/var/lib/neo4j-community-$NEO4J_VERSION"
+  echo "DIR=\"$DIR\"" | sudo tee -a /etc/environment
 
   export FILE="$DIR-unix.tar.gz"
   echo "FILE=\"$DIR-unix.tar.gz\"" | sudo tee -a /etc/environment
   
+  mkdir -p $DIR
   wget http://dist.neo4j.org/$FILE
-  tar xfz $FILE
+  tar xfz $FILE -C $DIR
   
   rm $FILE
   echo "org.neo4j.server.webserver.address=0.0.0.0" >> $DIR/conf/neo4j-server.properties
